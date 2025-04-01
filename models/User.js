@@ -1,0 +1,83 @@
+const { sequelize, Model, DataTypes } = require("../setup");
+const Role = require("./Role");
+
+
+
+
+
+class User extends Model { }
+User.init(
+    {
+        firstname: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+
+        }
+        ,
+        firstname: {
+            type: DataTypes.STRING(50),
+            field: 'firstname',
+            allowNull: false
+        },
+        lastname: {
+            type: DataTypes.STRING(50),
+            field: 'lastname',
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING(100),
+            field: 'email',
+            allowNull: false,
+            unique: true
+        },
+        password: {
+            type: DataTypes.STRING(100),
+            field: 'password',
+            allowNull: false
+        },
+        phone: {
+            type: DataTypes.INTEGER,
+            field: 'phone'
+        },
+        orders: {
+            type: DataTypes.JSON,
+            field: 'orders',
+            defaultValue: {}
+        },
+        avatar: {
+            type: DataTypes.STRING,
+            field: 'avatar'
+        },
+        country: {
+            type: DataTypes.STRING(50),
+            field: 'country'
+        },
+        neighborhood: {
+            type: DataTypes.STRING(50),
+            field: 'state'
+        },
+        city: {
+            type: DataTypes.STRING(50),
+            field: 'city'
+        },
+        address: {
+            type: DataTypes.TEXT,
+            field: 'address'
+        },
+        zip: {
+            type: DataTypes.TINYINT,
+            field: 'zip'
+        },
+
+
+    },
+
+
+    { sequelize, modelName: "user" }
+);
+
+
+
+
+module.exports = User
+
