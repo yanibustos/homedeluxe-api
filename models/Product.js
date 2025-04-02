@@ -13,9 +13,9 @@ Product.init(
         currency: DataTypes.STRING,
         stock: DataTypes.TINYINT,
         featured: DataTypes.BOOLEAN,
-        img: {
+        image: {
             type: DataTypes.JSON,
-            field: 'img',
+            field: 'image',
             defaultValue: {}
         },
     },

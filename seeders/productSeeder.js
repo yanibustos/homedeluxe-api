@@ -14,7 +14,7 @@ async function productSeeders() {
             currency: "USD",
             stock: 18,
             featured: false,
-            img: [
+            image: [
                 "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20560/full/Home-Deluxe-Sofa-Rom-Grau-Ambiente-Rechts.jpg",
                 "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20560/full/Home-Deluxe-Sofa-Rom-Grau-Freisteller-Rechts.jpg",
                 "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20560/full/Home-Deluxe-Sofa-Rom-Grau-Details3.jpg",
@@ -31,7 +31,7 @@ async function productSeeders() {
             currency: "USD",
             stock: 6,
             featured: true,
-            img: [
+            image: [
                 "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20411/full/49454-home-deluxe-sofa-verona-s-hellgrau-ambiente-01.jpg",
                 "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20411/full/49454-home-deluxe-sofa-verona-s-hellgrau-freisteller-01.jpg",
                 "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20411/full/49454-home-deluxe-sofa-verona-hellgrau-detail-01.jpg",
