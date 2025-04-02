@@ -17,8 +17,8 @@ const productController = {
     create: (req, res) => res.render(),
 
     store: async (req, res) => {
-        const { tittle, description, category, price, stock } = req.body;
-        const product = await Product.create({ id, tittle, description, category, price, stock })
+        const { tittle, description, category, price, stock, currency } = req.body;
+        const product = await Product.create({ id, tittle, description, category, price, stock, currency })
 
         return res.json({ product })
     },
@@ -26,16 +26,16 @@ const productController = {
 
 
     edit: async (req, res) => {
-        const { tittle, description, category, price, stock } = req.body;
+        const { tittle, description, category, price, stock, currency } = req.body;
         const { id } = req.params;
-        const product = await Product.findOne(id, tittle, description, category, price, stock);
+        const product = await Product.findOne(id, tittle, description, category, price, stock, currency);
         return res.render({ product });
     },
 
 
     update: async (req, res) => {
-        const { tittle, description, category, price, stock } = req.body;
-        const product = await Product.update(tittle, description, category, price, stock);
+        const { tittle, description, category, price, stock, currency } = req.body;
+        const product = await Product.update(tittle, description, category, price, stock, currency);
 
         return res.json("/:id", { product });
 
