@@ -5,7 +5,7 @@ const productController = {
 
     index: async (req, res) => {
         const products = await Product.findAll()
-        return res.json({ products });
+        return res.json(products);
     },
 
     show: async (req, res) => {
@@ -17,7 +17,7 @@ const productController = {
     create: (req, res) => res.render(),
 
     store: async (req, res) => {
-        const { tittle, description, category, price, stock} = req.body;
+        const { tittle, description, category, price, stock } = req.body;
         const product = await Product.create({ id, tittle, description, category, price, stock })
 
         return res.json({ product })
@@ -29,7 +29,7 @@ const productController = {
         const { tittle, description, category, price, stock } = req.body;
         const { id } = req.params;
         const product = await Product.findOne(id, tittle, description, category, price, stock);
-        return res.render( { product });
+        return res.render({ product });
     },
 
 
