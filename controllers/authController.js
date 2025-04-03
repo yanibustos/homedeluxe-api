@@ -58,12 +58,15 @@ async function resetPassword(req, res) {
   const { token } = req.params;
   const { password } = req.body;
 
+  if (!password) {
+    return res.status(400).json({ msg: "Password is required" });
+  }
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findOne({ where: { email: decoded.email } });
 
     if (!user) {
-      console.log("User not found or invalid token");
       return res.status(400).json({ message: "Invalid token or user not found" });
     }
     user.password = await bcrypt.hash(password, 10);
@@ -81,8 +84,8 @@ const sendResetEmail = async (email, resetLink) => {
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "65a7cc4ab4701a",
-      pass: "de2f4ac8f4afbe",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
   console.log("Hola");
