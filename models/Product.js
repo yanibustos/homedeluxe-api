@@ -9,9 +9,9 @@ Product.init(
         name: DataTypes.STRING,
         description: DataTypes.TEXT,
         category: DataTypes.STRING,
-        price: DataTypes.FLOAT,
+        price: DataTypes.DECIMAL,
         currency: DataTypes.STRING,
-        stock: DataTypes.TINYINT,
+        stock: DataTypes.INTEGER,
         featured: DataTypes.BOOLEAN,
         image: {
             type: DataTypes.JSON,
