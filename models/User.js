@@ -10,12 +10,6 @@ User.init(
     {
         firstname: {
             type: DataTypes.STRING(50),
-            allowNull: false,
-
-        }
-        ,
-        firstname: {
-            type: DataTypes.STRING(50),
             field: 'firstname',
             allowNull: false
         },
