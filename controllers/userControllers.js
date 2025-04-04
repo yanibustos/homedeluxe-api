@@ -55,11 +55,11 @@ const userController = {
         keepExtensions: true,
       });
 
-      form.parse(req, async (error, mapValueFieldNames, files) => {
-        if (err) throw new Error("Something went wrong.");
+      form.parse(req, async (error, fields, files) => {
+        if (error) throw new Error("Something went wrong.");
 
         const { id } = req.params;
-        const { firstname, lastname, email, password } = fields;
+        const { firstname, lastname, email, password, phone, address } = fields;
         const user = await User.findByPk(id);
         let avatar = user.avatar;
 
@@ -67,13 +67,19 @@ const userController = {
           avatar = files.avatar.newFilename;
         }
 
-        const hashedPassword = password ? await user.hashedPassword(password) : user.password;
+        const phoneValue = fields.phone?.trim() || null;
+        const addressValue = fields.address?.trim() || null;
+        const hashedPassword = password ? await User.hashedPassword(password) : user.password;
 
-        const updatedUser = await User.findByIdAndUpdate(
-          id,
-          { firstname, lastname, username, email, password: hashedPassword, description, avatar },
-          { new: true, runValidators: true },
-        );
+        const updatedUser = await user.update({
+          firstname,
+          lastname,
+          email,
+          password: hashedPassword,
+          avatar,
+          phone: phoneValue,
+          address: addressValue,
+        });
 
         if (updatedUser) {
           await supabase.storage.from("avatars").remove([user.avatar]);
