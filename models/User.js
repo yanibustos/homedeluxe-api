@@ -43,7 +43,7 @@ User.init(
       allowNull: false,
     },
     phone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       field: "phone",
     },
     orders: {
@@ -59,7 +59,7 @@ User.init(
       type: DataTypes.STRING(50),
       field: "country",
     },
-    neighborhood: {
+    state: {
       type: DataTypes.STRING(50),
       field: "state",
     },
