@@ -20,13 +20,7 @@ async function getToken(req, res) {
     }
 
     const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
-    const userData = {
-      id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      avatar: user.avatar,
-    };
+    const { password, ...userData } = user.toJSON();
 
     return res.status(200).json({ accessToken: token, ...userData });
   } catch (error) {
