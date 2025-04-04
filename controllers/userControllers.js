@@ -59,8 +59,14 @@ const userController = {
         if (error) throw new Error("Something went wrong.");
 
         const { id } = req.params;
-        const { firstname, lastname, email, password, phone, address } = fields;
+        const { firstname, lastname, email, password, phone, address, country, state, city, zip } =
+          fields;
         const user = await User.findByPk(id);
+
+        if (!user) {
+          return res.status(404).json({ message: "User not found." });
+        }
+
         let avatar = user.avatar;
 
         if (files.avatar && files.avatar.size > 0) {
@@ -69,6 +75,10 @@ const userController = {
 
         const phoneValue = fields.phone?.trim() || null;
         const addressValue = fields.address?.trim() || null;
+        const countryValue = fields.country?.trim() || null;
+        const stateValue = fields.state?.trim() || null;
+        const zipValue = fields.zip?.trim() || null;
+        const cityValue = fields.city?.trim() || null;
         const hashedPassword = password ? await User.hashedPassword(password) : user.password;
 
         const updatedUser = await user.update({
@@ -79,6 +89,10 @@ const userController = {
           avatar,
           phone: phoneValue,
           address: addressValue,
+          country: countryValue,
+          state: stateValue,
+          city: cityValue,
+          zip: zipValue,
         });
 
         if (updatedUser) {
@@ -99,8 +113,6 @@ const userController = {
                 .json({ message: "Error uploading avatar", error: error.message });
             }
           }
-        } else {
-          return res.status(404).json({ message: "User not found." });
         }
         return res.json(updatedUser);
       });
