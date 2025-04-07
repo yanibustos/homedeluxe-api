@@ -1,8 +1,8 @@
 const Product = require("../models/Product");
 
 async function productSeeders() {
-    await Product.sync({ force: true });
-    console.log("Se restablecieron las tablas de roles");
+  await Product.sync({ force: true });
+  console.log("Se restablecieron las tablas de roles");
 
     const newProduct = [
             
@@ -157,6 +157,7 @@ async function productSeeders() {
 
     await Product.bulkCreate(newProduct);
     console.log("¡Las tablas de productos fueron creadas!");
+
 }
 
 module.exports = productSeeders;
