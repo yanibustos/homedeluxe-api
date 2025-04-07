@@ -1,8 +1,4 @@
 const { sequelize, Model, DataTypes } = require("../setup");
-const Role = require("./Role");
-
-
-
 
 
 class User extends Model { }
@@ -59,9 +55,15 @@ User.init(
             field: 'address'
         },
         zip: {
-            type: DataTypes.TINYINT,
+            type: DataTypes.INTEGER,
             field: 'zip'
         },
+
+        role: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+
+        }
 
 
     },

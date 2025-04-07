@@ -1,4 +1,3 @@
-const Role = require("../models/Role");
 const User = require("../models/User")
 
 
@@ -10,7 +9,7 @@ const userController = {
     },
 
     show: async (req, res) => {
-        const user = await User.findByPk(req.params.id, { include: Role})
+        const user = await User.findByPk(req.params.id)
         return res.json({ user });
     },
 

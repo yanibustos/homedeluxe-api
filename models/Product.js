@@ -8,10 +8,12 @@ Product.init(
 
         name: DataTypes.STRING,
         description: DataTypes.TEXT,
+        info: DataTypes.TEXT,
+        sku: DataTypes.UUIDV1,
         category: DataTypes.STRING,
-        price: DataTypes.FLOAT,
+        price: DataTypes.DECIMAL,
         currency: DataTypes.STRING,
-        stock: DataTypes.TINYINT,
+        stock: DataTypes.INTEGER,
         featured: DataTypes.BOOLEAN,
         image: {
             type: DataTypes.JSON,
@@ -19,6 +21,8 @@ Product.init(
             defaultValue: {}
         },
     },
+
+    Product.belongsToMany(orderBy, { through: "OrderProduct" }),
     { sequelize, modelName: "product" }
 );
 
