@@ -26,6 +26,7 @@ Product.init(
   {
     sequelize,
     modelName: "product",
+    paranoid: true,
     hooks: {
       beforeCreate: (product) => {
         product.slug = slugify(product.name, { lower: true, strict: true });
