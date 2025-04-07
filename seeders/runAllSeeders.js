@@ -4,14 +4,10 @@ require("dotenv").config();
 async function runAllSeeders() {
 
 
-    await require("./roleSeeder")();
     await require("./userSeeder")();
     await require("./productSeeder")();
-
-    console.log("Se corrieron los seeders");
-
-
-
+    
+    console.log("Se corrieron los seeders"); 
 
 };
 
