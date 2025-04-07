@@ -12,7 +12,7 @@ async function getToken(req, res) {
 
     const user =
       (await User.findOne({ where: { email: req.body.email } })) ||
-      Admin.findOne({ where: { email: req.body.email } });
+      (await Admin.findOne({ where: { email: req.body.email } }));
     if (!user) {
       return res.status(401).json({ msg: "Invalid Credentials" });
     }
@@ -36,15 +36,26 @@ async function requestPasswordReset(req, res) {
   const { email } = req.body;
   console.log("Request received to reset password for email:", email);
   try {
-    const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    let user = await User.findOne({ where: { email } });
+    if (!user) {
+      user = await Admin.findOne({ where: { email } });
+    }
 
-    const resetToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const resetToken = jwt.sign(
+      { email: user.email, model: user instanceof User ? "user" : "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
 
     const resetLink = `${process.env.API_URL}/reset-password/${resetToken}`;
+
     await sendResetEmail(user.email, resetLink);
 
-    res.status(201).json({ msg: "Reset link sent to email" });
+    return res.status(201).json({ msg: "Reset link sent to email" });
   } catch (error) {
     console.error("Error during password reset request:", error);
     res.status(500).json({ msg: "Internal server error" });
@@ -61,11 +72,18 @@ async function resetPassword(req, res) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ where: { email: decoded.email } });
+    let user;
+
+    if (decoded.model === "user") {
+      user = await User.findOne({ where: { email: decoded.email } });
+    } else if (decoded.model === "admin") {
+      user = await Admin.findOne({ where: { email: decoded.email } });
+    }
 
     if (!user) {
       return res.status(400).json({ message: "Invalid token or user not found" });
     }
+
     user.password = await bcrypt.hash(password, 10);
     await user.save();
 
@@ -85,7 +103,7 @@ const sendResetEmail = async (email, resetLink) => {
       pass: process.env.EMAIL_PASS,
     },
   });
-  console.log("Hola");
+  console.log("Sending reset email...");
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
