@@ -2,7 +2,6 @@ const { sequelize, Model, DataTypes } = require("../setup");
 const slugify = require("slugify");
 
 class Product extends Model {}
-class Product extends Model {}
 Product.init(
   {
     name: DataTypes.STRING,
@@ -23,7 +22,7 @@ Product.init(
       defaultValue: "",
     },
   },
-//       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
+  //       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
   {
     sequelize,
     modelName: "product",
