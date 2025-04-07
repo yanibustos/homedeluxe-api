@@ -62,7 +62,36 @@ const orderController = {
     create: (req, res) => res.render("addOrder"),
 
     store: async (req, res) => {
-
+        if (typeof req.body == undefined) {
+            res.json({
+                status: 'error',
+                message: 'data is undefined',
+            });
+        } else {  
+             
+                 let cartCount = 0;
+             Order.find().countDocuments(function (err, count) {
+               OrderCount = count
+               })
+    
+                 .then(() => {
+            const order = {
+                id: req.params,
+                userId: req.body.userId,
+                date: req.body.date,
+                products: req.body.products,
+            };
+             
+             order.save()
+               .then(order => res.json(order))
+               .catch(err => console.log(err))
+    
+            res.json(order);
+             })
+    
+            res.json({...req.body,id:Order.find().count()+1})
+        }
+    
     },
 
 

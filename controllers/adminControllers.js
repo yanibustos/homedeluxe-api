@@ -1,4 +1,3 @@
-const Role = require("../models/Role");
 const Admin = require("../models/Admin")
 
 
