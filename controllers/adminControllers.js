@@ -10,7 +10,7 @@ const adminController = {
     },
 
     show: async (req, res) => {
-        const admin = await Admin.findByPk(req.params.id, { include: Role})
+        const admin = await Admin.findByPk(req.params.id)
         return res.json({ admin });
     },
 
