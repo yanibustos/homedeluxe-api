@@ -2,6 +2,7 @@ const { sequelize, Model, DataTypes } = require("../setup");
 const slugify = require("slugify");
 
 class Product extends Model {}
+class Product extends Model {}
 Product.init(
   {
     name: DataTypes.STRING,
