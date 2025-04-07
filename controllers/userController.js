@@ -16,8 +16,16 @@ const userController = {
   },
 
   show: async (req, res) => {
-    const user = await User.findByPk(req.params.id, { include: Role });
-    return res.json({ user });
+    try {
+      const user = await User.findByPk(req.params.id);
+      if (user) {
+        return res.status(200).json({ msg: "User found successfully", user });
+      } else {
+        return res.status(400).json({ msg: "User not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
   },
 
   create: (req, res) => res.render("addUser"),
@@ -25,20 +33,25 @@ const userController = {
   store: async (req, res) => {
     try {
       const { firstname, lastname, email, password } = req.body;
-      const isEmailRegistered = await User.findOne({ where: { email } });
 
-      if (isEmailRegistered) {
+      const isEmailRegisteredInUser = await User.findOne({ where: { email } });
+      const isEmailRegisteredInAdmin = await Admin.findOne({ where: { email } });
+
+      if (isEmailRegisteredInUser || isEmailRegisteredInAdmin) {
         return res.status(400).json({ msg: "Email is already registered" });
       }
 
       const hashedPassword = await User.hashedPassword(password);
+
       const user = await User.create({ firstname, lastname, email, password: hashedPassword });
+
       return res.status(201).json({ msg: "User created successfully", user });
     } catch (error) {
       console.error("Error creating user:", error);
       res.status(500).json({ msg: error.message });
     }
   },
+
   edit: async (req, res) => {
     const { firstname, lastname, email } = req.body;
     const { id } = req.params;
