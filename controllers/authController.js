@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -11,7 +12,7 @@ async function getToken(req, res) {
 
     const user =
       (await User.findOne({ where: { email: req.body.email } })) ||
-      (await Admin.findOne({ where: { email: req.body.email } }));
+      Admin.findOne({ where: { email: req.body.email } });
     if (!user) {
       return res.status(401).json({ msg: "Invalid Credentials" });
     }

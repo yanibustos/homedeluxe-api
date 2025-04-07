@@ -2,6 +2,8 @@ const userRoutes = require("./userRoutes");
 const productRoutes = require("./productRoutes");
 const authRoutes = require("./authRoutes");
 const pagesRoutes = require("./pagesRoutes");
+const orderRoutes = require("./orderRoutes");
+const adminRoutes = require("./adminRoutes");
 
 module.exports = (app) => {
   app.use("/", authRoutes);

@@ -23,6 +23,7 @@ Product.init(
       defaultValue: "",
     },
   },
+//       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
   {
     sequelize,
     modelName: "product",

@@ -1,5 +1,6 @@
-const Role = require("../models/Role");
-const User = require("../models/User");
+
+const User = require("../models/User")
+
 
 const formidable = require("formidable");
 const { createClient } = require("@supabase/supabase-js");
@@ -39,13 +40,6 @@ const userController = {
       console.error("Error creating user:", error);
       res.status(500).json({ msg: error.message });
     }
-  },
-
-  edit: async (req, res) => {
-    const { firstname, lastname, email } = req.body;
-    const { id } = req.params;
-    const user = await User.findOne(id, firstname, lastname, email);
-    return res.render("editUser", { user });
   },
 
   update: async (req, res) => {
