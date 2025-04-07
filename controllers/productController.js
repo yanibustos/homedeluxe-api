@@ -104,27 +104,19 @@ const productController = {
       form.parse(req, async (error, fields, files) => {
         if (error) throw new Error("Something went wrong.");
 
-        // Extract fields from the form data
         const { name, description, category, price, stock, currency, featured } = fields;
-
-        // Get the product ID from the params
         const productId = req.params.id;
 
-        // Fetch the current product to get the existing image
         const existingProduct = await Product.findOne({ where: { id: productId } });
-
         if (!existingProduct) {
           return res.status(404).json({ msg: "Product not found" });
         }
 
-        // Check if a new image is provided, otherwise keep the existing one
-        let image = existingProduct.image; // Default to the existing image if no new one is provided
+        let image = existingProduct.image;
 
-        // If a new image is uploaded, update the image
         if (files.image && files.image.size) {
           image = files.image.newFilename;
 
-          // Upload the new image to Supabase (or wherever you store images)
           const { data, error } = await supabase.storage
             .from("avatars")
             .upload(files.image.newFilename, fs.createReadStream(files.image.filepath), {
@@ -139,7 +131,6 @@ const productController = {
           }
         }
 
-        // Update the product in the database
         const product = await Product.update(
           {
             name,
@@ -149,7 +140,7 @@ const productController = {
             stock,
             currency,
             featured,
-            image, // Set the image to the current one or the new one
+            image,
           },
           {
             where: { id: productId },
