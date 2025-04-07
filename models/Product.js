@@ -1,27 +1,41 @@
 const { sequelize, Model, DataTypes } = require("../setup");
+const slugify = require("slugify");
 
-
-
-class Product extends Model { }
+class Product extends Model {}
 Product.init(
-    {
-
-        name: DataTypes.STRING,
-        description: DataTypes.TEXT,
-        category: DataTypes.STRING,
-        price: DataTypes.DECIMAL,
-        currency: DataTypes.STRING,
-        stock: DataTypes.INTEGER,
-        featured: DataTypes.BOOLEAN,
-        image: {
-            type: DataTypes.JSON,
-            field: 'image',
-            defaultValue: {}
-        },
+  {
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    category: DataTypes.STRING,
+    price: DataTypes.DECIMAL,
+    currency: DataTypes.STRING,
+    stock: DataTypes.INTEGER,
+    featured: DataTypes.BOOLEAN,
+    image: {
+      type: DataTypes.JSON,
+      field: "image",
+      defaultValue: {},
     },
-    { sequelize, modelName: "product" }
+    slug: {
+      type: DataTypes.STRING,
+      field: "slug",
+      defaultValue: "",
+    },
+  },
+  {
+    sequelize,
+    modelName: "product",
+    hooks: {
+      beforeCreate: (product) => {
+        product.slug = slugify(product.name, { lower: true, strict: true });
+      },
+      beforeUpdate: (product) => {
+        if (product.name) {
+          product.slug = slugify(product.name, { lower: true, strict: true });
+        }
+      },
+    },
+  },
 );
 
-
-
-module.exports = Product
+module.exports = Product;
