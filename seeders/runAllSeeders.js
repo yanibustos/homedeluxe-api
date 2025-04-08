@@ -2,6 +2,7 @@ require("dotenv").config();
 
 async function runAllSeeders() {
   await require("./userSeeder")();
+  await require("./adminSeeder")();
   await require("./productSeeder")();
 
   console.log("Se corrieron los seeders");
