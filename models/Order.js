@@ -15,48 +15,61 @@ Order.init(
             required: true
         },
 
-        
+
         date: {
             type: DataTypes.DATE,
             required: true
-        }, 
+        },
 
-        products:[
+        products: [
             {
-                productId:{
+                productId: {
                     type: DataTypes.INTEGER,
-                    ref:Product,
-                    required:true
+                    ref: Product,
+                    required: true
                 },
-                quantity:{
-                    type:DataTypes.INTEGER,
-                    required:true
+                quantity: {
+                    type: DataTypes.INTEGER,
+                    required: true
                 },
 
                 price: {
-                    type:DataTypes.DECIMAL,
-                    required:true
+                    type: DataTypes.DECIMAL,
+                    required: true
                 },
 
                 stock: {
-                    type:DataTypes.INTEGER,
-                    required:true
+                    type: DataTypes.INTEGER,
+                    required: true
                 },
 
                 sku: {
-                    type:DataTypes.STRING,
-                    required:true
+                    type: DataTypes.STRING,
+                    required: true
+                }, 
+
+                status: {
+                    type: DataTypes.ENUM('pending', 'paid', 'processing', 'shipped', 'claim', 'returned', 'canceled', 'closed' ),
+                    required: true,
+                    defaultValue: 'pending',
+                    allowNull: false,
+                    timestamps: true,
+
+                    
                 }
-                
+
             }
         ]
-        
+
     },
 
-    Order.belongsToMany(Product, { through: "OrderProduct"}),
-    { sequelize, modelName: "order" }
-);
+    Order.belongsToMany(Product, { through: "OrderProduct", foreignKey: "orderId", otherKey: "productId" }),
 
-
-
-module.exports = Order
+    // descomentar las dependencias en User
+    
+     { sequelize, modelName: "order" }
+    );
+    
+    
+    
+    module.exports = Order

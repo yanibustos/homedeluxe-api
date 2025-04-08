@@ -1,13 +1,11 @@
 const bcrypt = require("bcryptjs");
-
 const _ = require("lodash");
-
-const User = require("../models/User");
+const Admin = require("../models/Admin");
 
 
 async function adminSeeders() {
-    await User.sync({ force: true });
-    console.log("Se restablecieron las tablas de usuarios");
+    await Admin.sync({ force: true });
+    console.log("Se restablecieron las tablas de admin");
 
     const hashedPassword = await bcrypt.hash("password123", 10);
 

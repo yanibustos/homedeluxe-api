@@ -9,7 +9,7 @@ Product.init(
         name: DataTypes.STRING,
         description: DataTypes.TEXT,
         info: DataTypes.TEXT,
-        sku: DataTypes.UUIDV1,
+        sku: DataTypes.UUID,
         category: DataTypes.STRING,
         price: DataTypes.DECIMAL,
         currency: DataTypes.STRING,
@@ -22,7 +22,7 @@ Product.init(
         },
     },
 
-    Product.belongsToMany(orderBy, { through: "OrderProduct" }),
+   Product.belongsToMany(orderBy, { through: "OrderProduct", foreignKey: "productId", otherKey: "orderId" }),
     { sequelize, modelName: "product" }
 );
 
