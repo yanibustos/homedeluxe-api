@@ -1,22 +1,17 @@
 const { sequelize, Model, DataTypes } = require("../setup");
-const Product = require("./Product")
-const User = require("./User")
+const Product = require("./Product");
+const User = require("./User");
 
-
-
-
-class Order extends Model { }
+class Order extends Model {}
 Order.init(
-    {
+  {
+    userId: {
+      type: DataTypes.INTEGER,
+      references: User,
+      required: true,
+    },
 
-        userId: {
-            type: DataTypes.INTEGER,
-            references: User,
-            required: true
-        },
-
-
-        date: {
+       date: {
             type: DataTypes.DATE,
             required: true
         },

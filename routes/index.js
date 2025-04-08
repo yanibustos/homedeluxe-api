@@ -14,6 +14,5 @@ module.exports = (app) => {
     app.use("/orders", orderRoutes);
     app.use("/admin", adminRoutes)
     app.use("/", pagesRoutes);
-    
-
+   
 };

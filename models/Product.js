@@ -22,10 +22,11 @@ Product.init(
       defaultValue: "",
     },
   },
-//       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
+  //       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
   {
     sequelize,
     modelName: "product",
+    paranoid: true,
     hooks: {
       beforeCreate: (product) => {
         product.slug = slugify(product.name, { lower: true, strict: true });
