@@ -75,14 +75,15 @@ User.init(
       type: DataTypes.INTEGER,
       field: "zip",
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
 
   {
     sequelize,
     modelName: "user",
-    defaultScope: {
-      attributes: { exclude: ["password"] },
-    },
   },
 );
 
