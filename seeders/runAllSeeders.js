@@ -12,3 +12,4 @@ runAllSeeders();
 
 // para correr los seeders crear primero una base de datos en tableplus, actualizar .env
 // y correr en la terminal "node seeders/runAllSeeders.js"
+

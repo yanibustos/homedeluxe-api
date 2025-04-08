@@ -4,7 +4,7 @@ const _ = require("lodash");
 
 const User = require("../models/User");
 
-async function userSeeders() {
+async function userSeeder() {
   await User.sync({ force: true });
   console.log("Se restablecieron las tablas de usuarios");
 
@@ -37,4 +37,4 @@ async function userSeeders() {
   console.log("¡Las tablas de usuario fueron creadas!");
 }
 
-module.exports = userSeeders;
+module.exports = userSeeder;
