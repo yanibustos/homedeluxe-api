@@ -1,44 +1,58 @@
 const { sequelize, Model, DataTypes } = require("../setup");
 
+class Admin extends Model {
+  async isValidPassword(password) {
+    try {
+      return await bcrypt.compare(password, this.password);
+    } catch (error) {
+      throw new Error("Password comparison failed");
+    }
+  }
 
-class Admin extends Model { }
+  static async hashedPassword(password) {
+    try {
+      return await bcrypt.hash(password, 10);
+    } catch (error) {
+      throw new Error("Password hashing failed");
+    }
+  }
+}
 Admin.init(
-    {
-        firstname: {
-            type: DataTypes.STRING(50),
-            field: 'firstname',
-            allowNull: false
-        },
-        lastname: {
-            type: DataTypes.STRING(50),
-            field: 'lastname',
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING(100),
-            field: 'email',
-            allowNull: false,
-            unique: true
-        },
-        password: {
-            type: DataTypes.STRING(100),
-            field: 'password',
-            allowNull: false
-        },                        
-        avatar: {
-            type: DataTypes.STRING,
-            field: 'avatar'
-        }    
-
-
+  {
+    firstname: {
+      type: DataTypes.STRING(50),
+      field: "firstname",
+      allowNull: false,
     },
+    lastname: {
+      type: DataTypes.STRING(50),
+      field: "lastname",
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING(100),
+      field: "email",
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING(100),
+      field: "password",
+      allowNull: false,
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      field: "avatar",
+    },
+  },
 
-
-    { sequelize, modelName: "admin" }
+  {
+    sequelize,
+    modelName: "admin",
+    defaultScope: {
+      attributes: { exclude: ["password"] },
+    },
+  },
 );
 
-
-
-
-module.exports = Admin
-
+module.exports = Admin;

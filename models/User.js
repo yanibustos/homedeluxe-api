@@ -1,5 +1,5 @@
 const { sequelize, Model, DataTypes } = require("../setup");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 class User extends Model {
   async isValidPassword(password) {
@@ -77,7 +77,13 @@ User.init(
     },
   },
 
-  { sequelize, modelName: "user" },
+  {
+    sequelize,
+    modelName: "user",
+    defaultScope: {
+      attributes: { exclude: ["password"] },
+    },
+  },
 );
 
 module.exports = User;
