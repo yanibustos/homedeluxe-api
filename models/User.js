@@ -1,5 +1,6 @@
 const { sequelize, Model, DataTypes } = require("../setup");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+const Order = require("./Order");
 
 class User extends Model {
   async isValidPassword(password) {
@@ -80,4 +81,9 @@ User.init(
   { sequelize, modelName: "user" },
 );
 
-module.exports = User;
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
+module.exports = User
+
