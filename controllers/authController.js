@@ -13,6 +13,7 @@ async function getToken(req, res) {
     const user =
       (await User.findOne({ where: { email: req.body.email } })) ||
       (await Admin.findOne({ where: { email: req.body.email } }));
+
     if (!user) {
       return res.status(401).json({ msg: "Invalid Credentials" });
     }
@@ -23,6 +24,7 @@ async function getToken(req, res) {
     }
 
     const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
+
     const { password, ...userData } = user.toJSON();
 
     return res.status(200).json({ accessToken: token, ...userData });
