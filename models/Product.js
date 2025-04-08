@@ -8,7 +8,11 @@ Product.init(
     description: DataTypes.TEXT,
     category: DataTypes.STRING,
     price: DataTypes.DECIMAL,
-    currency: DataTypes.STRING,
+    currency: {
+      type: DataTypes.ENUM("USD", "UYU"),
+      defaultValue: "USD",
+      allowNull: false,
+    },
     stock: DataTypes.INTEGER,
     featured: DataTypes.BOOLEAN,
     image: {
@@ -38,9 +42,6 @@ Product.init(
       },
     },
   },
-
-  Product.belongsToMany(orderBy, { through: "OrderProduct", foreignKey: "productId", otherKey: "orderId" }),
-  { sequelize, modelName: "product" }
 );
 
 module.exports = Product;
