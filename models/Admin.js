@@ -44,14 +44,15 @@ Admin.init(
       type: DataTypes.STRING,
       field: "avatar",
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
 
   {
     sequelize,
     modelName: "admin",
-    defaultScope: {
-      attributes: { exclude: ["password"] },
-    },
   },
 );
 
