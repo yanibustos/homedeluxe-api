@@ -1,5 +1,6 @@
 const { sequelize, Model, DataTypes } = require("../setup");
 const slugify = require("slugify");
+const Category = require("./Category");
 
 class Product extends Model {}
 Product.init(
@@ -22,7 +23,7 @@ Product.init(
       defaultValue: "",
     },
   },
-  //       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
+
   {
     sequelize,
     modelName: "product",
@@ -39,7 +40,7 @@ Product.init(
     },
   },
 
-  Product.belongsToMany(orderBy, { through: "OrderProduct", foreignKey: "productId", otherKey: "orderId" }),
+  Product.belongsToMany(Category, {  foreignKey: 'categoryId',    as: 'category' }),
   { sequelize, modelName: "product" }
 );
 
