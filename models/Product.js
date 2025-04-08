@@ -38,6 +38,9 @@ Product.init(
       },
     },
   },
+
+  Product.belongsToMany(orderBy, { through: "OrderProduct", foreignKey: "productId", otherKey: "orderId" }),
+  { sequelize, modelName: "product" }
 );
 
 module.exports = Product;

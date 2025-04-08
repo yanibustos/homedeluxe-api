@@ -6,10 +6,13 @@ const orderRoutes = require("./orderRoutes");
 const adminRoutes = require("./adminRoutes");
 
 module.exports = (app) => {
-  app.use("/", authRoutes);
-  app.use("/users", userRoutes);
-  app.use("/products", productRoutes);
-  app.use("/orders", orderRoutes);
-  app.use("/admin", adminRoutes);
-  app.use("/", pagesRoutes);
+
+    app.use("/", authRoutes);
+    app.use("/users", userRoutes);
+    app.use("/products", productRoutes);
+
+    app.use("/orders", orderRoutes);
+    app.use("/admin", adminRoutes)
+    app.use("/", pagesRoutes);
+   
 };
