@@ -1,6 +1,7 @@
-const { sequelize, Model, DataTypes } = require("../setup");
+const { sequelize, DataTypes } = require("../setup");
+const BaseModel = require("./BaseModel");
 
-class Admin extends Model {
+class Admin extends BaseModel {
   async isValidPassword(password) {
     try {
       return await bcrypt.compare(password, this.password);

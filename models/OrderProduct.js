@@ -1,6 +1,7 @@
-const { sequelize, Model, DataTypes } = require("../setup");
+const { sequelize, DataTypes } = require("../setup");
+const BaseModel = require("./BaseModel");
 
-class OrderProduct extends Model {}
+class OrderProduct extends BaseModel {}
 
 OrderProduct.init(
   {

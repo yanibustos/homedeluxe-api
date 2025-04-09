@@ -11,8 +11,8 @@ module.exports = (app) => {
   app.use("/products", productRoutes);
 
   app.use(checkAuth);
-  app.use("/users", userRoutes);
 
+  app.use("/users", userRoutes);
   app.use("/orders", orderRoutes);
   app.use("/admin", adminRoutes);
   app.use("/", pagesRoutes);
