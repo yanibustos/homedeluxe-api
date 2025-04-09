@@ -1,24 +1,15 @@
-const express = require('express')
-const router = express.Router()
-const orderController = require('../controllers/orderController')
-const auth = require("../middlewares/checkAuth");
+const express = require("express");
+const router = express.Router();
+const orderController = require("../controllers/orderController");
 
-router.use(auth)  // Todas las rutas estan protegidas en order
+router.get("/", orderController.index);
+router.get("/create", orderController.create);
+router.post("/", orderController.store);
+router.get("/:id", orderController.show);
+router.get("/:id/edit", orderController.edit);
+router.patch("/:id", orderController.update);
+router.delete("/:id", orderController.destroy);
 
-//order desde dashboard
+router.patch("/:id/status", orderController.updateStatus);
 
-router.get('/', orderController.index)  
-router.get('/:id', orderController.show)
-router.put('/:id', orderController.edit)
-router.patch('/:id', orderController.update)
-router.destroy('/:id', orderController.destroy)
-
-// order desde user
-
-router.get('/:userId', orderController.getOrdersbyUserid)
-router.get('/:userId/:id', orderController.showOrder)
-router.post('/:userId/:id:', orderController.create);
-router.put('/:userId/:id', orderController.updateByUser);
-router.delete('/:userId', orderController.destroyByUser);
-
-module.exports = router
+module.exports = router;
