@@ -1,8 +1,7 @@
 const { sequelize, DataTypes } = require("../setup");
-const bcrypt = require("bcryptjs");
 const BaseModel = require("./BaseModel");
 
-class User extends BaseModel {
+class Admin extends BaseModel {
   async isValidPassword(password) {
     try {
       return await bcrypt.compare(password, this.password);
@@ -19,74 +18,42 @@ class User extends BaseModel {
     }
   }
 }
-
-User.init(
+Admin.init(
   {
     firstname: {
       type: DataTypes.STRING(50),
       field: "firstname",
       allowNull: false,
     },
-
     lastname: {
       type: DataTypes.STRING(50),
       field: "lastname",
       allowNull: false,
     },
-
     email: {
       type: DataTypes.STRING(100),
       field: "email",
       allowNull: false,
       unique: true,
     },
-
     password: {
       type: DataTypes.STRING(100),
       field: "password",
       allowNull: false,
     },
-
-    phone: {
-      type: DataTypes.STRING,
-      field: "phone",
-    },
-
     avatar: {
       type: DataTypes.STRING,
       field: "avatar",
-    },
-
-    country: {
-      type: DataTypes.STRING(50),
-      field: "country",
-    },
-
-    state: {
-      type: DataTypes.STRING(50),
-      field: "state",
-    },
-
-    city: {
-      type: DataTypes.STRING(50),
-      field: "city",
-    },
-
-    address: {
-      type: DataTypes.TEXT,
-      field: "address",
-    },
-
-    zip: {
-      type: DataTypes.INTEGER,
-      field: "zip",
     },
   },
 
   {
     sequelize,
-    modelName: "user",
+    modelName: "admin",
+    defaultScope: {
+      attributes: { exclude: ["password"] },
+    },
   },
 );
 
-module.exports = User;
+module.exports = Admin;
