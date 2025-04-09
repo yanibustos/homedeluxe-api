@@ -2,7 +2,7 @@ const Product = require("../models/Product");
 
 async function productSeeders() {
     await Product.sync({ force: true });
-    console.log("Se restablecieron las tablas de roles");
+    console.log("Se restablecieron las tablas de productos");
 
     const newProduct = [
 
