@@ -3,11 +3,11 @@ const Order = require("./Order");
 const Product = require("./Product");
 const OrderProduct = require("./OrderProduct");
 
-User.hasMany(Order, { foreignKey: "userId", as: "userOrders" });
-Order.belongsTo(User, { foreignKey: "userId", as: "orderUser" });
+User.hasMany(Order, { foreignKey: "userId" });
+Order.belongsTo(User, { foreignKey: "userId" });
 
-Order.belongsToMany(Product, { through: "OrderProduct", foreignKey: "orderId" });
-Product.belongsToMany(Order, { through: "OrderProduct", foreignKey: "productId" });
+Order.belongsToMany(Product, { through: "OrderProduct", foreignKey: "orderId", as: "products" });
+Product.belongsToMany(Order, { through: "OrderProduct", foreignKey: "productId", as: "orders" });
 
 module.exports = {
   User,
