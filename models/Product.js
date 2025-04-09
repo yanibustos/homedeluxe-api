@@ -26,6 +26,8 @@ Product.init(
       type: DataTypes.STRING,
       field: "slug",
       defaultValue: "",
+      unique: true,
+      allowNull: false,
     },
   },
   //       Product.belongsToMany(orderBy, { through: "OrderProduct" }),

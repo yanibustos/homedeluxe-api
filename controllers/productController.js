@@ -27,6 +27,7 @@ const productController = {
   showBySlug: async (req, res) => {
     try {
       const slug = req.params.slug;
+
       const product = await Product.findOne({ where: { slug } });
 
       if (product) {
