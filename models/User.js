@@ -81,6 +81,11 @@ User.init(
       type: DataTypes.INTEGER,
       field: "zip",
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
 
   {

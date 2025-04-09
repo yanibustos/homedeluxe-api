@@ -1,7 +1,7 @@
-const { sequelize, DataTypes } = require("../setup");
+const { sequelize, DataTypes, Model } = require("../setup");
 const BaseModel = require("./BaseModel");
 
-class Admin extends BaseModel {
+class Admin extends Model {
   async isValidPassword(password) {
     try {
       return await bcrypt.compare(password, this.password);
@@ -45,14 +45,16 @@ Admin.init(
       type: DataTypes.STRING,
       field: "avatar",
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   },
 
   {
     sequelize,
     modelName: "admin",
-    defaultScope: {
-      attributes: { exclude: ["password"] },
-    },
   },
 );
 
