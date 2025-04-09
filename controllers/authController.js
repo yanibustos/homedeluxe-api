@@ -10,9 +10,34 @@ async function getToken(req, res) {
       return res.status(400).json({ msg: "Email and password are required" });
     }
 
-    const user =
-      (await User.findOne({ where: { email: req.body.email } })) ||
-      (await Admin.findOne({ where: { email: req.body.email } }));
+    const user = await User.findOne({ where: { email: req.body.email } });
+
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid Credentials" });
+    }
+
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ msg: "Invalid Credentials" });
+    }
+
+    const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
+    const { password, ...userData } = user.toJSON();
+
+    return res.status(200).json({ accessToken: token, ...userData });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({ msg: error.message });
+  }
+}
+
+async function getAdminToken(req, res) {
+  try {
+    if (!req.body.email || !req.body.password) {
+      return res.status(400).json({ msg: "Email and password are required" });
+    }
+
+    const user = await Admin.findOne({ where: { email: req.body.email } });
     if (!user) {
       return res.status(401).json({ msg: "Invalid Credentials" });
     }
@@ -117,4 +142,4 @@ const sendResetEmail = async (email, resetLink) => {
   }
 };
 
-module.exports = { getToken, requestPasswordReset, resetPassword };
+module.exports = { getToken, getAdminToken, requestPasswordReset, resetPassword };
