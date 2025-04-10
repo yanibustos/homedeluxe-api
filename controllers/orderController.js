@@ -1,4 +1,4 @@
-const { Order, User, Product, OrderProduct } = require("../models");
+const { Order, User, Product } = require("../models");
 
 const orderController = {
   index: async (req, res) => {
@@ -8,14 +8,6 @@ const orderController = {
           {
             model: User,
             attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-          },
-          {
-            model: Product,
-            as: "products",
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: ["quantity"],
-            },
           },
         ],
       });
@@ -33,14 +25,6 @@ const orderController = {
           {
             model: User,
             attributes: { exclude: ["password"] },
-          },
-          {
-            model: Product,
-            as: "products",
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: ["quantity"],
-            },
           },
         ],
       });
@@ -82,14 +66,6 @@ const orderController = {
         shippingAdress,
         paymentMethod,
       });
-
-      for (const item of products) {
-        await OrderProduct.create({
-          orderId: order.id,
-          productId: item.productId,
-          quantity: item.quantity,
-        });
-      }
 
       return res.status(201).json({ order });
     } catch (error) {

@@ -1,8 +1,7 @@
-const { sequelize, DataTypes } = require("../setup");
+const { sequelize, DataTypes, Model } = require("../setup");
 const slugify = require("slugify");
-const BaseModel = require("./BaseModel");
 
-class Product extends BaseModel {}
+class Product extends Model {}
 
 Product.init(
   {
@@ -30,7 +29,7 @@ Product.init(
       allowNull: false,
     },
   },
-  //       Product.belongsToMany(orderBy, { through: "OrderProduct" }),
+
   {
     sequelize,
     modelName: "product",
