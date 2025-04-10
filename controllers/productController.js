@@ -40,6 +40,20 @@ const productController = {
     }
   },
 
+  showByFeatured: async (req, res) => {
+    try {
+      const products = await Product.findAll({ where: { featured: true } });
+
+      if (products && products.length > 0) {
+        return res.status(200).json({ msg: "Products were found successfully", products });
+      } else {
+        return res.status(404).json({ msg: "No featured products found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
   create: (req, res) => {
     //TODO: FIx or delete
     // res.render()
@@ -54,12 +68,48 @@ const productController = {
 
       form.parse(req, async (error, fields, files) => {
         if (error) throw new Error("Something went wrong.");
-        const { name, description, category, price, stock, currency, featured } = fields;
 
-        const imageSize = files.image.size;
-        let image = "";
-        if (imageSize) {
-          image = files.image.newFilename;
+        const { name, description, category, price, stock, currency, featured } = fields;
+        const images = [];
+
+        if (files.image && Array.isArray(files.image)) {
+          for (const file of files.image) {
+            const imageSize = file.size;
+            if (imageSize) {
+              images.push(file.newFilename);
+
+              const { data, error: uploadError } = await supabase.storage
+                .from("avatars")
+                .upload(file.newFilename, fs.createReadStream(file.filepath), {
+                  cacheControl: "3600",
+                  upsert: false,
+                  contentType: file.mimetype,
+                  duplex: "half",
+                });
+
+              if (uploadError) {
+                return res.status(500).json({ msg: "Image upload failed", error: uploadError });
+              }
+            }
+          }
+        } else if (files.image) {
+          const imageSize = files.image.size;
+          if (imageSize) {
+            images.push(files.image.newFilename);
+
+            const { data, error: uploadError } = await supabase.storage
+              .from("avatars")
+              .upload(files.image.newFilename, fs.createReadStream(files.image.filepath), {
+                cacheControl: "3600",
+                upsert: false,
+                contentType: files.image.mimetype,
+                duplex: "half",
+              });
+
+            if (uploadError) {
+              return res.status(500).json({ msg: "Image upload failed", error: uploadError });
+            }
+          }
         }
 
         const product = await Product.create({
@@ -70,23 +120,13 @@ const productController = {
           stock,
           currency,
           featured,
-          image,
+          image: images,
         });
 
         if (product) {
-          const { data, error } = await supabase.storage
-            .from("avatars")
-            .upload(files.image.newFilename, fs.createReadStream(files.image.filepath), {
-              cacheControl: "3600",
-              upsert: false,
-              contentType: files.image.mimetype,
-              duplex: "half",
-            });
-
-          if (error) {
-            return res.status(500).json({ msg: "Image upload failed", error });
-          }
           return res.status(201).json({ msg: "Product created successfully", product });
+        } else {
+          return res.status(500).json({ msg: "Product creation failed" });
         }
       });
     } catch (error) {
