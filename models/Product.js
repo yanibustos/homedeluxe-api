@@ -9,6 +9,8 @@ Product.init(
     description: DataTypes.TEXT,
     category: DataTypes.STRING,
     price: DataTypes.DECIMAL,
+    info: DataTypes.STRING,
+
     currency: {
       type: DataTypes.ENUM("USD", "UYU"),
       defaultValue: "USD",
@@ -19,7 +21,6 @@ Product.init(
     image: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       field: "image",
-      defaultValue: {},
     },
     slug: {
       type: DataTypes.STRING,

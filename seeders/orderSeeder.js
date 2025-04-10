@@ -4,7 +4,6 @@ const _ = require("lodash");
 module.exports = async () => {
   await User.sync();
   await Order.sync();
-  await Product.sync();
 
   const users = await User.findAll();
   const products = await Product.findAll();
@@ -37,12 +36,12 @@ module.exports = async () => {
           quantity: _.random(1, 3),
         };
       });
-      console.log("Items generados:", items);
+
       const orderData = {
         userId: user.id,
         items,
         status: _.sample(["pending", "paid", "processing", "shipped", "canceled"]),
-        shippingAdress: `Calle ${_.random(1, 1000)}`,
+        shippingAddress: `Calle ${_.random(1, 1000)}`,
         paymentMethod: _.sample(["VISA", "MASTERCARD", "Mercado Pago", "PayPal", "AMEX"]),
       };
 

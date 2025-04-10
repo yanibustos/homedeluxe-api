@@ -43,27 +43,16 @@ const orderController = {
 
   store: async (req, res) => {
     try {
-      const { userId, products, shippingAdress, paymentMethod } = req.body;
+      const { userId, items, shippingAddress, paymentMethod } = req.body;
 
-      if (!userId || !products || products.length === 0) {
+      if (!userId || !items || items.length === 0) {
         return res.status(400).json({ msg: "Invalid data" });
-      }
-
-      let totalPrice = 0;
-
-      for (const item of products) {
-        const product = await Product.findByPk(item.productId);
-
-        if (!product) {
-          return res.status(404).json({ msg: `Product ${item.productId} not found` });
-        }
-        totalPrice += parseFloat(product.price) * item.quantity;
       }
 
       const order = await Order.create({
         userId,
-        totalPrice,
-        shippingAdress,
+        items,
+        shippingAddress,
         paymentMethod,
       });
 
