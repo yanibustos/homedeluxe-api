@@ -1,7 +1,5 @@
 const bcrypt = require("bcryptjs");
 
-const _ = require("lodash");
-
 const User = require("../models/User");
 
 async function userSeeder() {
