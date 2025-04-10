@@ -6,7 +6,7 @@ class OrderProduct extends BaseModel {}
 OrderProduct.init(
   {
     orderId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: "orders",
@@ -15,7 +15,7 @@ OrderProduct.init(
     },
 
     productId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: "products",
