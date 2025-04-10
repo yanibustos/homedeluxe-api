@@ -12,55 +12,6 @@ async function userSeeder() {
 
   const newUsers = [
     {
-      firstname: "admin",
-      lastname: "admin",
-      email: "admin@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
-      firstname: "Darlen",
-      lastname: "Hornia",
-      email: "dhornia@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
-      firstname: "Cristofer",
-      lastname: "Fernández",
-      email: "cfernandez@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
-      firstname: "Yanina",
-      lastname: "Bustos",
-      email: "ybustos@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
-      firstname: "Federico",
-      lastname: "Vargas",
-      email: "fvargas@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
-      firstname: "Ayhesa",
-      lastname: "Hinds",
-      email: "ahinds@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
-      firstname: "edit",
-      lastname: "edit",
-      email: "edit@homedeluxe.com",
-      password: hashedPassword,
-      avatar: "/img/avatar.png",
-    },
-    {
       firstname: "user",
       lastname: "user",
       email: "userprueba@gmail.com",

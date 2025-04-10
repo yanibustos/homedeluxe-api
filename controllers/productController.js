@@ -24,6 +24,22 @@ const productController = {
     }
   },
 
+  showBySlug: async (req, res) => {
+    try {
+      const slug = req.params.slug;
+
+      const product = await Product.findOne({ where: { slug } });
+
+      if (product) {
+        return res.status(200).json({ msg: "Product found successfully", product });
+      } else {
+        return res.status(400).json({ msg: "Product not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
   create: (req, res) => {
     //TODO: FIx or delete
     // res.render()
