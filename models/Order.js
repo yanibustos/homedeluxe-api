@@ -15,7 +15,7 @@ Order.init(
       type: DataTypes.FLOAT,
     },
 
-    shippingAdress: {
+    shippingAddress: {
       type: DataTypes.STRING,
     },
 
