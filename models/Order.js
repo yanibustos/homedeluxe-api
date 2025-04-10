@@ -1,7 +1,6 @@
-const { sequelize, DataTypes } = require("../setup");
-const BaseModel = require("./BaseModel");
+const { sequelize, DataTypes, Model } = require("../setup");
 
-class Order extends BaseModel {}
+class Order extends Model {}
 
 Order.init(
   {
@@ -11,8 +10,9 @@ Order.init(
       defaultValue: "pending",
     },
 
-    totalPrice: {
-      type: DataTypes.FLOAT,
+    items: {
+      type: DataTypes.JSONB,
+      defaultValue: [],
     },
 
     shippingAddress: {

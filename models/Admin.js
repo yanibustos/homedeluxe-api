@@ -1,6 +1,4 @@
 const { sequelize, DataTypes, Model } = require("../setup");
-const BaseModel = require("./BaseModel");
-
 class Admin extends Model {
   async isValidPassword(password) {
     try {
