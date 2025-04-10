@@ -18,9 +18,8 @@ Product.init(
     stock: DataTypes.INTEGER,
     featured: DataTypes.BOOLEAN,
     image: {
-      type: DataTypes.JSON,
-      field: "image",
-      defaultValue: {},
+      type: DataTypes.ARRAY(DataTypes.STRING),
+       allowNull: false,
     },
     slug: {
       type: DataTypes.STRING,
