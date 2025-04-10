@@ -12,31 +12,28 @@ const productController = {
 
   show: async (req, res) => {
     try {
-      const product = await Product.findByPk(req.params.id);
+      const { id } = req.params;
 
-      if (product) {
+      if (isNaN(id)) {
+        const product = await Product.findOne({ where: { slug: id } });
+
+        if (!product) {
+          return res.status(404).json({ message: "Product not found" });
+        }
+
         return res.status(200).json({ msg: "Product found successfully", product });
-      } else {
-        return res.status(400).json({ msg: "Product not found" });
       }
-    } catch (error) {
-      return res.status(500).json({ msg: error.message });
-    }
-  },
 
-  showBySlug: async (req, res) => {
-    try {
-      const slug = req.params.slug;
+      const product = await Product.findByPk(id);
 
-      const product = await Product.findOne({ where: { slug } });
-
-      if (product) {
-        return res.status(200).json({ msg: "Product found successfully", product });
-      } else {
-        return res.status(400).json({ msg: "Product not found" });
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
       }
-    } catch (error) {
-      return res.status(500).json({ msg: error.message });
+
+      return res.status(200).json({ msg: "Product found successfully", product });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
     }
   },
 
