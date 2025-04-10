@@ -40,6 +40,20 @@ const productController = {
     }
   },
 
+  showByFeatured: async (req, res) => {
+    try {
+      const products = await Product.findAll({ where: { featured: true } });
+
+      if (products && products.length > 0) {
+        return res.status(200).json({ msg: "Products were found successfully", products });
+      } else {
+        return res.status(404).json({ msg: "No featured products found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
   create: (req, res) => {
     //TODO: FIx or delete
     // res.render()
