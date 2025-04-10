@@ -18,7 +18,7 @@ Product.init(
     stock: DataTypes.INTEGER,
     featured: DataTypes.BOOLEAN,
     image: {
-      type: DataTypes.JSON,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       field: "image",
       defaultValue: {},
     },
