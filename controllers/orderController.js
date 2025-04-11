@@ -80,6 +80,23 @@ const orderController = {
       return res.status(500).json({ msg: error.message });
     }
   },
+
+  getOrdersbyUser: async (req, res) => {
+    try {
+      const { userId } = req.params;
+
+      const orders = await Order.findAll({ where: { userId } });
+
+      if (!orders) {
+        return res.status(404).json({ msg: "There is no orders yet" });
+      }
+
+      return res.status(200).json({ msg: "Orders retrieved successfully", orders });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
   edit: async (req, res) => {},
 
   update: async (req, res) => {},
