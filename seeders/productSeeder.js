@@ -171,7 +171,6 @@ async function productSeeders() {
         "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/22217/full/57230-home-deluxe-relaxsessel-hocker-chill-anthrazit-freisteller-01.jpg",
         "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/22217/full/57230-home-deluxe-relaxsessel-hocker-chill-anthrazit-detail-01.jpg",
         "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/22217/full/57230-home-deluxe-relaxsessel-hocker-chill-anthrazit-masszeichnung.jpg",
-        ,
       ],
       slug: "chill-relaxation-armchair-with-stool-beige",
     },
