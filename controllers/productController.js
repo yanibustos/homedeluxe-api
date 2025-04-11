@@ -212,9 +212,13 @@ const productController = {
   },
 
   destroy: async (req, res) => {
-    const { id } = req.params;
-    await Product.destroy(id);
-    return res.redirect("/");
+    try {
+      const { id } = req.params;
+      await Product.destroy({ where: { id } });
+      return res.status(200).json({ msg: "Product deleted successfully" });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
   },
 };
 
