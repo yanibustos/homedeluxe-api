@@ -1,10 +1,30 @@
+const { Category } = require("../models");
 const Product = require("../models/Product");
 
-async function productSeeders() {
+async function productSeeder() {
   await Product.sync({ force: true });
-  console.log("Se restablecieron las tablas de productos");
+  console.log("Se restablecieron las tablas de producto");
 
-  const newProduct = [
+  const categories = [
+    "Outdoor",
+    "Kitchen",
+    "Kids",
+    "Bedroom",
+    "Office",
+    "Dining",
+    "Decoration",
+    "Sofas and armchairs",
+  ];
+
+  const categoryRecords = await Promise.all(
+    categories.map((name) =>
+      Category.findOrCreate({ where: { name } }).then(([category]) => category),
+    ),
+  );
+
+  const getCategoryId = (categoryName) => categoryRecords.find((c) => c.name === categoryName)?.id;
+
+  const newProducts = [
     {
       name: "VERONA S - Modular sofa  - 240 x 120 cm light gray",
       description:
@@ -333,7 +353,7 @@ async function productSeeders() {
       description:
         "Treat yourself to pure relaxation with our DESCANSO porch swing and turn your garden, balcony, or terrace into the perfect retreat. The spacious swing bench offers comfortable seating for up to three people and transforms any outdoor area into an oasis of well-being. Let yourself be gently rocked and enjoy relaxing hours outdoors. DESCANSO impresses with its high-quality workmanship and durable materials. The powder-coated frame is corrosion-resistant, while the sturdy polyester roof offers reliable protection from the sun and light rain. The adjustable canopy remains stable even in windy conditions, and the integrated cup holders and soft 8 cm padding ensure maximum comfort. UV-resistant sun protection completes the set and makes long sessions comfortable.",
       info: "Transform your outdoor area into a cozy oasis of well-being with the DESCANSO porch swing. Get your relaxation piece now and enjoy the combination of style, comfort, and functionality!",
-      category: "Oudoor",
+      category: "Outdoor",
       price: 629,
       currency: "USD",
       stock: 2,
@@ -386,8 +406,16 @@ async function productSeeders() {
     },
   ];
 
-  await Product.bulkCreate(newProduct);
+  const productsWithCategoryId = newProducts.map((product) => {
+    const categoryId = getCategoryId(product.category);
+    if (!categoryId) {
+      throw new Error(`Category "${product.category}" not found`);
+    }
+    return { ...product, categoryId };
+  });
+
+  await Product.bulkCreate(productsWithCategoryId);
   console.log("¡Las tablas de productos fueron creadas!");
 }
 
-module.exports = productSeeders;
+module.exports = productSeeder;
