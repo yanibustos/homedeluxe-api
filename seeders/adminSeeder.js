@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs");
-const _ = require("lodash");
 const Admin = require("../models/Admin");
 
 async function adminSeeders() {
