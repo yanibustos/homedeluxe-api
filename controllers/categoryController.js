@@ -1,11 +1,26 @@
-const { Category } = require("../models");
+const { Category, Product } = require("../models");
+const { sequelize } = require("../setup");
 
 const categoryController = {
   index: async (req, res) => {
     try {
-      const categories = await Category.findAll();
+      const categories = await Category.findAll({
+        attributes: [
+          "id",
+          "name",
+          [sequelize.fn("COUNT", sequelize.col("products.id")), "productCount"],
+        ],
+        include: [
+          {
+            model: Product,
+            attributes: [],
+          },
+        ],
+        group: ["Category.id"],
+        order: [["id", "ASC"]],
+      });
 
-      return res.status(200).json({ msg: "Categories retrieved successfully", categories });
+      return res.status(200).json({ categories });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }
