@@ -8,24 +8,23 @@ const { Category } = require("../models");
 const productController = {
   index: async (req, res) => {
     try {
-      const { categoryId, orderBy, orderDir } = req.query;
+      const { categoryId, orderBy = "createdAt", order = "desc" } = req.query;
+      const whereClause = {};
+      const orderClause = [];
 
-      const where = {};
       if (categoryId) {
-        where.categoryId = categoryId;
+        whereClause.categoryId = categoryId;
       }
 
-      const order = [];
-      if (orderBy) {
-        order.push([orderBy, orderDir || "ASC"]);
+      const validFields = ["price", "createdAt"];
+      if (validFields.includes(orderBy)) {
+        orderClause.push([orderBy, order]);
       }
 
       const products = await Product.findAll({
-        where,
-        order,
-        include: "category",
+        where: whereClause,
+        order: orderClause,
       });
-
       return res.status(200).json({ products });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
