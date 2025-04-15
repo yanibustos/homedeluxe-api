@@ -10,9 +10,15 @@ Category.init(
       allowNull: false,
       unique: true,
     },
+
     slug: {
       type: DataTypes.STRING,
       field: "slug",
+      defaultValue: "",
+    },
+
+    image: {
+      type: DataTypes.STRING,
       defaultValue: "",
     },
   },
