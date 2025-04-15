@@ -42,6 +42,24 @@ async function categorySeeder() {
         "https://f.fcdn.app/imgs/5885fb/www.viasono.com.uy/viasuy/6b36/webp/catalogo/B206021753_206020033_1/460x460/silla-de-exterior-shadow-gris.jpg",
     },
     {
+      name: "Kids",
+      slug: "kids",
+      image:
+        "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/20779/full/20779-home-deluxe-Kinderbett-Sternenland-mit-Schubladen-90x200-Weiss-Ambiente01.jpg",
+    },
+    {
+      name: "Office",
+      slug: "office",
+      image:
+        "https://cdn02.plentymarkets.com/emoguafh21bo/item/images/25862/full/61787-61788-home-deluxe-schreibtisch-elmo-weiss-holz-ohne-ambiente-01.jpg",
+    },
+    {
+      name: "Dining",
+      slug: "dining",
+      image:
+        "https://f.fcdn.app/imgs/89d63a/www.viasono.com.uy/viasuy/e710/webp/catalogo/B205011969_205011863_1/460x460/mesa-de-comedor-pampa-marron-rectangular.jpg",
+    },
+    {
       name: "Uncategorized",
       slug: "uncategorized",
     },
