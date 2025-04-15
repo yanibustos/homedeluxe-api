@@ -8,7 +8,6 @@ Product.init(
     name: DataTypes.STRING,
     info: DataTypes.TEXT,
     description: DataTypes.TEXT,
-    category: DataTypes.STRING,
     price: DataTypes.DECIMAL,
     info: DataTypes.STRING,
 

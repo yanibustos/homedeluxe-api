@@ -3,11 +3,32 @@ const Product = require("../models/Product");
 const { createClient } = require("@supabase/supabase-js");
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const fs = require("fs");
+const { Category } = require("../models");
 
 const productController = {
   index: async (req, res) => {
-    const products = await Product.findAll();
-    return res.json(products);
+    try {
+      const { categoryId, orderBy = "createdAt", order = "desc" } = req.query;
+      const whereClause = {};
+      const orderClause = [];
+
+      if (categoryId) {
+        whereClause.categoryId = categoryId;
+      }
+
+      const validFields = ["price", "createdAt"];
+      if (validFields.includes(orderBy)) {
+        orderClause.push([orderBy, order]);
+      }
+
+      const products = await Product.findAll({
+        where: whereClause,
+        order: orderClause,
+      });
+      return res.status(200).json({ products });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
   },
 
   show: async (req, res) => {
@@ -112,7 +133,7 @@ const productController = {
         const product = await Product.create({
           name,
           description,
-          category,
+          categoryId: category,
           price,
           stock,
           currency,
@@ -188,7 +209,7 @@ const productController = {
           {
             name,
             description,
-            category,
+            categoryId: category,
             price,
             stock,
             currency,
