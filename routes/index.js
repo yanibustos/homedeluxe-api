@@ -9,10 +9,10 @@ const { expressjwt: checkJwt } = require("express-jwt");
 module.exports = (app) => {
   app.use("/", authRoutes);
   app.use("/products", productRoutes);
+  app.use("/categories", categoryRoutes);
 
   app.use(checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }));
 
-  app.use("/categories", categoryRoutes);
   app.use("/users", userRoutes);
   app.use("/orders", orderRoutes);
   app.use("/admin", adminRoutes);
