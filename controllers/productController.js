@@ -4,16 +4,24 @@ const { createClient } = require("@supabase/supabase-js");
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const fs = require("fs");
 const { Category } = require("../models");
+const { Op } = require("sequelize");
 
 const productController = {
   index: async (req, res) => {
     try {
-      const { categoryId, orderBy = "createdAt", order = "desc" } = req.query;
+      const { categoryId, orderBy = "createdAt", order = "desc", minPrice, maxPrice } = req.query;
+
       const whereClause = {};
       const orderClause = [];
 
       if (categoryId) {
         whereClause.categoryId = categoryId;
+      }
+
+      if (minPrice || maxPrice) {
+        whereClause.price = {};
+        if (minPrice) whereClause.price[Op.gte] = minPrice;
+        if (maxPrice) whereClause.price[Op.lte] = maxPrice;
       }
 
       const validFields = ["price", "createdAt"];
@@ -25,6 +33,7 @@ const productController = {
         where: whereClause,
         order: orderClause,
       });
+
       return res.status(200).json({ products });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
