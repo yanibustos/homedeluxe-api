@@ -8,6 +8,8 @@ const categoryController = {
         attributes: [
           "id",
           "name",
+          "image",
+          "slug",
           [sequelize.fn("COUNT", sequelize.col("products.id")), "productCount"],
         ],
         include: [
