@@ -9,7 +9,9 @@ const fs = require("fs");
 const adminController = {
   index: async (req, res) => {
     try {
-      const admins = await Admin.findAll();
+      const admins = await Admin.findAll({
+        attributes: { exclude: ["password"] },
+      });
       return res.status(200).json({ msg: "Admin users retrieved successfully", admins });
     } catch (error) {
       res.status(500).json({ msg: error.message });
@@ -18,7 +20,9 @@ const adminController = {
 
   show: async (req, res) => {
     try {
-      const admin = await Admin.findByPk(req.params.id);
+      const admin = await Admin.findByPk(req.params.id, {
+        attributes: { exclude: ["password"] },
+      });
       if (admin) {
         return res.status(200).json({ msg: "Admin user found successfully", admin });
       } else {
