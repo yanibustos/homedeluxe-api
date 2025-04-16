@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 
 const formidable = require("formidable");
 const { createClient } = require("@supabase/supabase-js");
