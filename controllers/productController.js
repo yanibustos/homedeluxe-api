@@ -9,7 +9,14 @@ const { Op } = require("sequelize");
 const productController = {
   index: async (req, res) => {
     try {
-      const { categoryId, orderBy = "createdAt", order = "desc", minPrice, maxPrice } = req.query;
+      const {
+        categoryId,
+        categorySlug,
+        orderBy = "createdAt",
+        order = "desc",
+        minPrice,
+        maxPrice,
+      } = req.query;
 
       const whereClause = {};
       const orderClause = [];
@@ -18,10 +25,18 @@ const productController = {
         whereClause.categoryId = categoryId;
       }
 
-      if (minPrice || maxPrice) {
+      if (categorySlug) {
+        const category = await Category.findOne({ where: { slug: categorySlug } });
+        if (!category) {
+          return res.status(404).json({ msg: "Category not found" });
+        }
+        whereClause.categoryId = category.id;
+      }
+
+      if (!isNaN(minPrice) || !isNaN(maxPrice)) {
         whereClause.price = {};
-        if (minPrice) whereClause.price[Op.gte] = minPrice;
-        if (maxPrice) whereClause.price[Op.lte] = maxPrice;
+        if (!isNaN(minPrice)) whereClause.price[Op.gte] = minPrice;
+        if (!isNaN(maxPrice)) whereClause.price[Op.lte] = maxPrice;
       }
 
       const validFields = ["price", "createdAt"];

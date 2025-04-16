@@ -8,7 +8,9 @@ const fs = require("fs");
 const userController = {
   index: async (req, res) => {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({
+        attributes: { exclude: ["password"] },
+      });
       return res.status(200).json({ msg: "Users retrieved successfully", users });
     } catch (error) {
       res.status(500).json({ msg: error.message });
@@ -17,7 +19,9 @@ const userController = {
 
   show: async (req, res) => {
     try {
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.params.id, {
+        attributes: { exclude: ["password"] },
+      });
       if (user) {
         return res.status(200).json({ msg: "User found successfully", user });
       } else {
