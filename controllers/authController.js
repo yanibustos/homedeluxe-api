@@ -3,6 +3,7 @@ const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const runAllSeeders = require("../seeders/runAllSeeders");
 
 async function getToken(req, res) {
   try {
@@ -87,6 +88,15 @@ async function requestPasswordReset(req, res) {
   }
 }
 
+async function resetDB(req, res) {
+  try {
+    await runAllSeeders();
+    res.status(200).json({ msg: "Database reset completed" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+}
+
 async function resetPassword(req, res) {
   const { token } = req.params;
   const { password } = req.body;
@@ -142,4 +152,4 @@ const sendResetEmail = async (email, resetLink) => {
   }
 };
 
-module.exports = { getToken, getAdminToken, requestPasswordReset, resetPassword };
+module.exports = { getToken, getAdminToken, requestPasswordReset, resetPassword, resetDB };
