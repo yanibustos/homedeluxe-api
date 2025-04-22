@@ -8,6 +8,7 @@ const orderController = {
           {
             model: User,
             attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+            paranoid: false,
           },
         ],
       });
@@ -25,6 +26,7 @@ const orderController = {
           {
             model: User,
             attributes: { exclude: ["password"] },
+            paranoid: false,
           },
         ],
       });
