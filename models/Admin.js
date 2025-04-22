@@ -53,6 +53,7 @@ Admin.init(
   {
     sequelize,
     modelName: "admin",
+    paranoid: true,
   },
 );
 
